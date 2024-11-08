@@ -1,0 +1,38 @@
+# Build artifacts
+build/
+bin/
+lib/
+*.o
+*.a
+*.so
+*.dylib
+*.dll
+*.exe
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info/
+.pytest_cache/
+.coverage
+htmlcov/
+dist/
+.venv/
+venv/
+ENV/
+
+# Red compilation artifacts
+*.bin
+*.reds.o
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
+
+# Logs and runtime dumps
+*.log
+*.journal
+*.trace
