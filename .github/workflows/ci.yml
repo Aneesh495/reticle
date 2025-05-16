@@ -1,0 +1,51 @@
+name: CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  verify:
+    name: Build & Verify
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, macos-latest]
+        python-version: ["3.10", "3.11", "3.12"]
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Verify zero em dash typography invariant
+        run: |
+          python3 tools/lint_no_em_dash.py
+
+      - name: Compile C17 fastpath library
+        run: |
+          make all
+
+      - name: Run C17 fastpath unit tests
+        run: |
+          make test-c
+
+      - name: Run multi-tier Python test suite
+        run: |
+          python3 -m unittest discover -s tests
+
+      - name: Execute cleanroom digital twin simulation
+        run: |
+          python3 python/reticle/cli.py emulate 50 0.5 -f
+
+      - name: Run performance benchmarks
+        run: |
+          python3 benchmarks/bench_fastpath.py
+          python3 benchmarks/bench_secs_throughput.py
+          python3 benchmarks/bench_oht_scalability.py
