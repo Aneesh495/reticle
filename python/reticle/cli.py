@@ -22,13 +22,17 @@ def cmd_emulate(args: argparse.Namespace) -> int:
     twin = CleanroomFabTwin(seed=args.seed)
     print("\033[2J\033[H", end="")  # Clear terminal screen
 
-    for step_idx in range(args.steps):
-        twin.step(dt=args.dt)
-        if step_idx % args.display_interval == 0:
+    steps = args.steps
+    dt = args.dt
+    display_interval = args.interval
+
+    for step_idx in range(steps):
+        twin.step(dt=dt)
+        if step_idx % display_interval == 0:
             print("\033[H", end="")
             print(FabDashboard.render(twin))
-            if not args.no_delay:
-                time.sleep(args.dt * 0.1)
+            if not args.fast:
+                time.sleep(dt * 0.1)
 
     print("\nSimulation complete.")
     metrics = twin.get_summary_metrics()
@@ -82,16 +86,16 @@ def main() -> int:
 
     # Subcommand: emulate
     emu_parser = subparsers.add_parser("emulate", help="Run cleanroom fab digital twin simulation")
-    emu_parser.add_argument("--steps", type=int, default=100, help="Simulation steps to execute")
-    emu_parser.add_argument("--dt", type=float, default=0.5, help="Simulation time step in seconds")
-    emu_parser.add_argument("--display-interval", type=int, default=2, help="HUD refresh interval in steps")
-    emu_parser.add_argument("--no-delay", action="store_true", help="Run at maximum speed without wall clock pacing")
-    emu_parser.add_argument("--seed", type=int, default=42, help="Random seed for simulation repeatability")
+    emu_parser.add_argument("steps", type=int, nargs="?", default=100, help="Simulation steps to execute")
+    emu_parser.add_argument("dt", type=float, nargs="?", default=0.5, help="Simulation time step in seconds")
+    emu_parser.add_argument("-i", "--interval", dest="interval", type=int, default=2, help="HUD refresh interval")
+    emu_parser.add_argument("-f", "--fast", dest="fast", action="store_true", help="Run at maximum speed")
+    emu_parser.add_argument("-s", "--seed", dest="seed", type=int, default=42, help="Random seed")
     emu_parser.set_defaults(func=cmd_emulate)
 
     # Subcommand: telemetry
     tel_parser = subparsers.add_parser("telemetry", help="Export cleanroom telemetry snapshot as JSON")
-    tel_parser.add_argument("--seed", type=int, default=42, help="Random seed")
+    tel_parser.add_argument("-s", "--seed", dest="seed", type=int, default=42, help="Random seed")
     tel_parser.set_defaults(func=cmd_telemetry)
 
     # Subcommand: test
