@@ -37,14 +37,19 @@ Red [
 #include %secs/s7-recipes.red
 #include %secs/s9-errors.red
 #include %secs/s10-terminal.red
+#include %secs/s12-wafermap.red
+#include %secs/s14-objects.red
+#include %secs/s16-jobs.red
 
 #include %gem/state-model.red
 #include %gem/variables.red
 #include %gem/events.red
 #include %gem/alarms.red
 #include %gem/spooling.red
+#include %gem/tool-models.red
 
 #include %amhs/topology.red
+#include %amhs/track-network.red
 #include %amhs/vehicle.red
 #include %amhs/routing.red
 #include %amhs/deadlock.red
@@ -57,6 +62,7 @@ Red [
 
 #include %e87/carrier.red
 #include %e87/slot-map.red
+#include %e87/lot-genealogy.red
 #include %e90/substrate.red
 
 reticle: context [
