@@ -22,6 +22,7 @@ print [
 #include %test-gem.red
 #include %test-amhs.red
 #include %test-e84.red
+#include %test-extended.red
 
 print [
     newline
