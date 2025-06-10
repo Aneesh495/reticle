@@ -98,10 +98,12 @@ reticle-sml-parser: context [
         (take/last item-stack)
     ]
 
+    dbl-quote: #"^""
+
     ascii-body-rule: [
         &(type-tag = "A" or (type-tag = "ASCII") or (type-tag = "J"))
         [
-            {"} copy str-content to {"} {"} (
+            dbl-quote copy str-content to dbl-quote dbl-quote (
                 emit-value 'A str-content
             )
             |
