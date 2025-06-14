@@ -42,7 +42,10 @@ test-c: $(TARGET_LIB) | $(BIN_DIR)
 	$(CC) $(CFLAGS) tests/test_fastpath.c $(TARGET_LIB) -o $(BIN_DIR)/test_fastpath
 	./$(BIN_DIR)/test_fastpath
 
-test: test-c
+test-red:
+	python3 tools/red_runner.py
+
+test: test-c test-red
 	python3 -m unittest discover -s tests
 
 lint:
