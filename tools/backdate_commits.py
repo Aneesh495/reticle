@@ -11,24 +11,24 @@ import subprocess
 import sys
 from datetime import datetime, timedelta
 
-def generate_timestamps(n_commits, seed=2021):
+def generate_timestamps(n_commits, seed=2024):
     random.seed(seed)
 
-    start_date = datetime(2021, 1, 14)
-    end_date = datetime(2021, 9, 28)
+    start_date = datetime(2024, 11, 8)
+    end_date = datetime(2025, 6, 19)
     total_days = (end_date - start_date).days
 
     raw_gaps = []
     for _ in range(n_commits - 1):
         r = random.random()
-        if r < 0.12:
-            gap = random.uniform(0.3, 1.2)
-        elif r < 0.70:
-            gap = random.uniform(2.0, 4.5)
+        if r < 0.15:
+            gap = random.uniform(1.2, 2.0)
+        elif r < 0.75:
+            gap = random.uniform(2.2, 3.6)
         elif r < 0.90:
-            gap = random.uniform(4.5, 6.0)
+            gap = random.uniform(3.6, 4.6)
         else:
-            gap = random.uniform(6.0, 7.5)
+            gap = random.uniform(4.6, 5.8)
         raw_gaps.append(gap)
 
     scale = total_days / sum(raw_gaps)
@@ -61,7 +61,7 @@ def generate_timestamps(n_commits, seed=2021):
             min_allowed = timestamps[-1] + timedelta(minutes=45)
             if candidate <= min_allowed:
                 candidate = min_allowed + timedelta(
-                    minutes=random.randint(15, 180),
+                    minutes=random.randint(45, 180),
                     seconds=random.randint(0, 59)
                 )
 
@@ -88,7 +88,7 @@ def main():
     n = len(commits)
     print(f"Discovered {n} commits to rewrite.")
 
-    timestamps = generate_timestamps(n, seed=2021)
+    timestamps = generate_timestamps(n, seed=2024)
 
     new_parent = None
     for i, old_hash in enumerate(commits):
