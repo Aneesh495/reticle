@@ -185,7 +185,7 @@ make test
 ### 3. Launch Cleanroom Fab Emulation
 
 ```bash
-python3 python/reticle/cli.py emulate 100 0.5
+PYTHONPATH=python python3 -m reticle.cli emulate 100 0.5
 ```
 
 ### 4. Run Performance Benchmarks
