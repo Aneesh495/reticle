@@ -42,7 +42,7 @@ jobs:
 
       - name: Execute cleanroom digital twin simulation
         run: |
-          python3 python/reticle/cli.py emulate 50 0.5 -f
+          PYTHONPATH=python python3 -m reticle.cli emulate 50 0.5 -f
 
       - name: Run performance benchmarks
         run: |
