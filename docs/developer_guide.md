@@ -49,7 +49,7 @@ python3 -m unittest discover -s tests
 To launch the real-time cleanroom digital twin with the interactive ANSI terminal status dashboard:
 
 ```bash
-python3 python/reticle/cli.py emulate 100 0.5
+PYTHONPATH=python python3 -m reticle.cli emulate 100 0.5
 ```
 
 Positional parameters:
@@ -61,7 +61,7 @@ Positional parameters:
 To export a live cleanroom telemetry snapshot as JSON:
 
 ```bash
-python3 python/reticle/cli.py telemetry
+PYTHONPATH=python python3 -m reticle.cli telemetry
 ```
 
 ---
